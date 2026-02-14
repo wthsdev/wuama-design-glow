@@ -45,7 +45,7 @@ const coreKpis = [
     sparklineData: [98400, 109200, 117600, 126000, 134400, 149400],
   },
   {
-    label: "WUAMA Cost",
+    label: "WUAMA Base Cost",
     value: "€6.200",
     delta: "+8%",
     deltaValue: 8,
