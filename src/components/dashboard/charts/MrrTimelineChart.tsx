@@ -11,29 +11,33 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/formatters";
 
-const MONTHS = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-
 const data12m = [
-  { month: "Mar", real: 8200, forecast: null, recurring: 7500, setup: 400, extras: 300 },
-  { month: "Abr", real: 8900, forecast: null, recurring: 8100, setup: 500, extras: 300 },
-  { month: "May", real: 9400, forecast: null, recurring: 8600, setup: 450, extras: 350 },
-  { month: "Jun", real: 9800, forecast: null, recurring: 9000, setup: 400, extras: 400 },
-  { month: "Jul", real: 10200, forecast: null, recurring: 9400, setup: 500, extras: 300 },
-  { month: "Ago", real: 10500, forecast: null, recurring: 9700, setup: 450, extras: 350 },
-  { month: "Sep", real: 10900, forecast: null, recurring: 10100, setup: 400, extras: 400 },
-  { month: "Oct", real: 11200, forecast: null, recurring: 10400, setup: 500, extras: 300 },
-  { month: "Nov", real: 11800, forecast: null, recurring: 10900, setup: 500, extras: 400 },
-  { month: "Dic", real: 12100, forecast: null, recurring: 11200, setup: 500, extras: 400 },
-  { month: "Ene", real: 12450, forecast: null, recurring: 11500, setup: 550, extras: 400 },
-  { month: "Feb", real: null, forecast: 13100, recurring: 12100, setup: 500, extras: 500 },
+  { month: "Mar", real: 8200, forecast: null, recurring: 7500, setup: 400, extras: 300, totalReal: 8200, totalForecast: null },
+  { month: "Abr", real: 8900, forecast: null, recurring: 8100, setup: 500, extras: 300, totalReal: 8900, totalForecast: null },
+  { month: "May", real: 9400, forecast: null, recurring: 8600, setup: 450, extras: 350, totalReal: 9400, totalForecast: null },
+  { month: "Jun", real: 9800, forecast: null, recurring: 9000, setup: 400, extras: 400, totalReal: 9800, totalForecast: null },
+  { month: "Jul", real: 10200, forecast: null, recurring: 9400, setup: 500, extras: 300, totalReal: 10200, totalForecast: null },
+  { month: "Ago", real: 10500, forecast: null, recurring: 9700, setup: 450, extras: 350, totalReal: 10500, totalForecast: null },
+  { month: "Sep", real: 10900, forecast: null, recurring: 10100, setup: 400, extras: 400, totalReal: 10900, totalForecast: null },
+  { month: "Oct", real: 11200, forecast: null, recurring: 10400, setup: 500, extras: 300, totalReal: 11200, totalForecast: null },
+  { month: "Nov", real: 11800, forecast: null, recurring: 10900, setup: 500, extras: 400, totalReal: 11800, totalForecast: null },
+  { month: "Dic", real: 12100, forecast: null, recurring: 11200, setup: 500, extras: 400, totalReal: 12100, totalForecast: null },
+  { month: "Ene", real: 12450, forecast: null, recurring: 11500, setup: 550, extras: 400, totalReal: 12450, totalForecast: null },
+  { month: "Feb", real: null, forecast: 13100, recurring: 12100, setup: 500, extras: 500, totalReal: null, totalForecast: 13100 },
 ];
 
 const data6m = data12m.slice(-6);
 
-function CustomTooltip({ active, payload, label }: any) {
+type ViewMode = "mrr" | "total";
+
+const viewConfig: Record<ViewMode, { title: string; subtitle: string }> = {
+  mrr: { title: "MRR Evolution", subtitle: "Monthly Recurring Revenue" },
+  total: { title: "Total Revenue Evolution", subtitle: "Recurring + Setup + Extras" },
+};
+
+function CustomTooltip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
   const d = payload[0]?.payload;
   if (!d) return null;
@@ -57,22 +61,35 @@ const formatYAxis = (v: number) => {
 
 export function MrrTimelineChart() {
   const [range, setRange] = useState("12M");
+  const [view, setView] = useState<ViewMode>("mrr");
   const chartData = range === "6M" ? data6m : data12m;
+
+  const realKey = view === "mrr" ? "real" : "totalReal";
+  const forecastKey = view === "mrr" ? "forecast" : "totalForecast";
+  const { title, subtitle } = viewConfig[view];
 
   return (
     <Card>
       <CardHeader className="flex-row items-start justify-between p-6 pb-2">
         <div>
-          <h3 className="text-base font-semibold font-heading">MRR Evolution</h3>
-          <p className="text-[13px] text-muted-foreground">Monthly Recurring Revenue</p>
+          <h3 className="text-base font-semibold font-heading">{title}</h3>
+          <p className="text-[13px] text-muted-foreground">{subtitle}</p>
         </div>
-        <Tabs value={range} onValueChange={setRange}>
-          <TabsList className="h-8">
-            <TabsTrigger value="6M" className="text-xs px-2.5 h-6">6M</TabsTrigger>
-            <TabsTrigger value="12M" className="text-xs px-2.5 h-6">12M</TabsTrigger>
-            <TabsTrigger value="All" className="text-xs px-2.5 h-6">All</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center gap-2">
+          <Tabs value={view} onValueChange={(v) => setView(v as ViewMode)}>
+            <TabsList className="h-8">
+              <TabsTrigger value="mrr" className="text-xs px-2.5 h-6">MRR</TabsTrigger>
+              <TabsTrigger value="total" className="text-xs px-2.5 h-6">Total Revenue</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Tabs value={range} onValueChange={setRange}>
+            <TabsList className="h-8">
+              <TabsTrigger value="6M" className="text-xs px-2.5 h-6">6M</TabsTrigger>
+              <TabsTrigger value="12M" className="text-xs px-2.5 h-6">12M</TabsTrigger>
+              <TabsTrigger value="All" className="text-xs px-2.5 h-6">All</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
       </CardHeader>
       <CardContent className="p-6 pt-2">
         <div className="h-[260px]">
@@ -101,7 +118,7 @@ export function MrrTimelineChart() {
               <RechartsTooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
-                dataKey="real"
+                dataKey={realKey}
                 stroke="hsl(var(--primary))"
                 strokeWidth={2}
                 fill="url(#mrrGradient)"
@@ -109,7 +126,7 @@ export function MrrTimelineChart() {
               />
               <Line
                 type="monotone"
-                dataKey="forecast"
+                dataKey={forecastKey}
                 stroke="hsl(var(--primary))"
                 strokeWidth={2}
                 strokeDasharray="6 4"
