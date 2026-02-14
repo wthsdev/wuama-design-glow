@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import { KpiCard } from "@/components/dashboard/KpiCard";
+import { getSpanishMonth } from "@/lib/formatters";
 
 // ─── Demo data ────────────────────────────────────────────────────────
 const coreKpis = [
@@ -152,12 +154,24 @@ const secondaryKpis = [
 
 interface KpiGridProps {
   mode: "forecast" | "real";
+  endMonth: number | null;
+  endYear: number | null;
 }
 
-export function KpiGrid({ mode }: KpiGridProps) {
+export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
   const filteredSecondaryKpis = mode === "forecast"
     ? secondaryKpis.filter((kpi) => kpi.label !== "Churn Rate" && kpi.label !== "At Risk")
     : secondaryKpis;
+
+  const displayCoreKpis = useMemo(() => {
+    if (mode === "real" && endMonth !== null && endYear !== null) {
+      const suffix = ` ${getSpanishMonth(endMonth)} ${endYear}`;
+      return coreKpis.map((kpi) =>
+        kpi.label === "MRR" ? { ...kpi, label: `MRR${suffix}` } : kpi
+      );
+    }
+    return coreKpis;
+  }, [mode, endMonth, endYear]);
 
   return (
     <div className="space-y-4">
@@ -165,7 +179,7 @@ export function KpiGrid({ mode }: KpiGridProps) {
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">Recurring Run-Rate</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {coreKpis.map((kpi) => (
+          {displayCoreKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="core" />
           ))}
         </div>

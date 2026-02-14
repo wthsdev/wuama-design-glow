@@ -11,31 +11,20 @@ type DataMode = "forecast" | "real";
 interface DashboardHeaderProps {
   mode: DataMode;
   onModeChange: (mode: DataMode) => void;
+  startMonth: number | null;
+  startYear: number | null;
+  endMonth: number | null;
+  endYear: number | null;
+  onApplyRange: (sm: number, sy: number, em: number, ey: number) => void;
 }
 
-export function DashboardHeader({ mode, onModeChange }: DashboardHeaderProps) {
+export function DashboardHeader({ mode, onModeChange, startMonth, startYear, endMonth, endYear, onApplyRange }: DashboardHeaderProps) {
   const [spinning, setSpinning] = useState(false);
-
-  // Month range state
-  const [startMonth, setStartMonth] = useState<number | null>(9); // Oct
-  const [startYear, setStartYear] = useState<number | null>(2025);
-  const [endMonth, setEndMonth] = useState<number | null>(11); // Dec
-  const [endYear, setEndYear] = useState<number | null>(2025);
 
   const handleRefresh = useCallback(() => {
     setSpinning(true);
     setTimeout(() => setSpinning(false), 800);
   }, []);
-
-  const handleApplyRange = useCallback(
-    (sm: number, sy: number, em: number, ey: number) => {
-      setStartMonth(sm);
-      setStartYear(sy);
-      setEndMonth(em);
-      setEndYear(ey);
-    },
-    [],
-  );
 
   return (
     <div className="mb-4 border-b pb-4">
@@ -82,7 +71,7 @@ export function DashboardHeader({ mode, onModeChange }: DashboardHeaderProps) {
               startYear={startYear}
               endMonth={endMonth}
               endYear={endYear}
-              onApply={handleApplyRange}
+              onApply={onApplyRange}
             />
           )}
         </div>
