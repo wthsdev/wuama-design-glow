@@ -103,6 +103,14 @@ const secondaryKpis = [
     formula: "Sum of variable costs associated with extras (Meta fees, credit provider costs)",
   },
   {
+    label: "One-Off Margin",
+    value: "€2.170",
+    delta: "+4%",
+    deltaValue: 4,
+    formula: "One-Off Margin = (Setup Fees + Extras Revenue) − Extras Cost",
+    formulaDetail: "Margin generated from non-recurring revenue streams after deducting variable costs.",
+  },
+  {
     label: "Net New MRR",
     value: "+€1.250",
     delta: "+€1.250",
@@ -165,7 +173,7 @@ export function KpiGrid({ mode }: KpiGridProps) {
       {/* Row 2 — Secondary KPIs */}
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">This Month: One-Off & Usage</h2>
-        <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-5" : "lg:grid-cols-7"}`}>
+        <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-8"}`}>
           {filteredSecondaryKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="secondary" />
           ))}
