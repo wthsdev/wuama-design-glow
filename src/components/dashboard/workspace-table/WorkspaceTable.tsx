@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/formatters";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { AdvancedFiltersDrawer, DEFAULT_FILTERS, type AdvancedFilters } from "./AdvancedFiltersDrawer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -74,6 +75,8 @@ export function WorkspaceTable() {
   const [perPage, setPerPage] = useState(20);
   const [isLoading] = useState(false);
   const [isError] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>(DEFAULT_FILTERS);
 
   // Debounce search
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -83,20 +86,52 @@ export function WorkspaceTable() {
   }, [search]);
 
   // Filter + search
+  // Count active advanced filters
+  const advFilterCount = useMemo(() => {
+    let c = 0;
+    const df = DEFAULT_FILTERS;
+    if (advancedFilters.statuses.length !== df.statuses.length || advancedFilters.statuses.some(s => !df.statuses.includes(s))) c++;
+    if (advancedFilters.plans.length !== df.plans.length) c++;
+    if (advancedFilters.alertTypes.length > 0) c++;
+    if (advancedFilters.marginRange[0] !== df.marginRange[0] || advancedFilters.marginRange[1] !== df.marginRange[1]) c++;
+    if (advancedFilters.usageLevel !== "any") c++;
+    if (advancedFilters.accountManager !== "any") c++;
+    return c;
+  }, [advancedFilters]);
+
   const filtered = useMemo(() => {
     let d = allData;
+
+    // Quick filter
     if (filter === "active") d = d.filter(w => w.status === "active");
     else if (filter === "onboarding") d = d.filter(w => w.status === "onboarding");
     else if (filter === "at_risk") d = d.filter(w => w.health === "red" || w.health === "amber");
     else if (filter === "negative_margin") d = d.filter(w => w.marginPct < 0);
     else if (filter === "overage") d = d.filter(w => w.convUsed > w.convIncluded || w.creditsUsed > w.creditsIncluded);
 
+    // Advanced filters
+    const af = advancedFilters;
+    d = d.filter(w => af.statuses.includes(w.status));
+    d = d.filter(w => af.plans.includes(w.plan));
+    if (af.alertTypes.length > 0) d = d.filter(w => w.alerts.some(a => af.alertTypes.includes(a.type)));
+    d = d.filter(w => w.marginPct >= af.marginRange[0] && w.marginPct <= af.marginRange[1]);
+    if (af.usageLevel !== "any") {
+      d = d.filter(w => {
+        const pct = Math.round((w.convUsed / w.convIncluded) * 100);
+        if (af.usageLevel === "low") return pct < 50;
+        if (af.usageLevel === "medium") return pct >= 50 && pct < 80;
+        if (af.usageLevel === "high") return pct >= 80 && pct <= 100;
+        if (af.usageLevel === "over") return pct > 100;
+        return true;
+      });
+    }
+
     if (debouncedSearch) {
       const q = debouncedSearch.toLowerCase();
       d = d.filter(w => w.name.toLowerCase().includes(q));
     }
     return d;
-  }, [allData, filter, debouncedSearch]);
+  }, [allData, filter, debouncedSearch, advancedFilters]);
 
   // Sort
   const sorted = useMemo(() => {
@@ -148,6 +183,7 @@ export function WorkspaceTable() {
 
   // ── Render ──────────────────────────────────────────────────────
   return (
+    <>
     <Card className="overflow-hidden">
       {/* Header */}
       <CardHeader className="flex flex-col gap-4 border-b p-5 md:flex-row md:items-center md:justify-between">
@@ -187,8 +223,13 @@ export function WorkspaceTable() {
               onChange={e => setSearch(e.target.value)}
             />
           </div>
-          <Button variant="outline" size="sm" className="gap-1.5">
+          <Button variant="outline" size="sm" className="relative gap-1.5" onClick={() => setFiltersOpen(true)}>
             <SlidersHorizontal className="h-4 w-4" /> Filters
+            {advFilterCount > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                {advFilterCount}
+              </span>
+            )}
           </Button>
           <Button variant="outline" size="sm" className="gap-1.5">
             <Download className="h-4 w-4" /> CSV
@@ -448,5 +489,13 @@ export function WorkspaceTable() {
         </div>
       )}
     </Card>
+
+    <AdvancedFiltersDrawer
+      open={filtersOpen}
+      onOpenChange={setFiltersOpen}
+      filters={advancedFilters}
+      onApply={(f) => { setAdvancedFilters(f); setPage(1); }}
+    />
+    </>
   );
 }
