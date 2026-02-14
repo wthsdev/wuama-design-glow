@@ -77,7 +77,7 @@ export function MrrTimelineChart() {
         </div>
         <div className="flex items-center gap-2">
           <Tabs value={view} onValueChange={(v) => setView(v as ViewMode)}>
-            <TabsList className="h-8">
+            <TabsList className="h-8 bg-primary/10">
               <TabsTrigger value="mrr" className="text-xs px-2.5 h-6">MRR</TabsTrigger>
               <TabsTrigger value="total" className="text-xs px-2.5 h-6">Total Revenue</TabsTrigger>
             </TabsList>
