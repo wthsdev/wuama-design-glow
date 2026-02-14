@@ -9,7 +9,24 @@ const coreKpis = [
     deltaValue: 12,
     formula: "MRR = Σ Active subscriptions × plan price",
     formulaDetail:
-      "Monthly Recurring Revenue is the sum of all active workspace subscriptions multiplied by their respective plan price. Excludes one-time fees and extras.",
+      "MRR = Σ workspace.monthly_fee for all active workspaces",
+    formulaNote: "Excludes setup fees and one-time extras.",
+    breakdownItems: [
+      { label: "Recurring Revenue", value: "€10.200" },
+      { label: "From Pro plans", value: "€6.800", indent: true },
+      { label: "From Starter plans", value: "€3.400", indent: true },
+      { label: "Setup Fees (excluded from MRR)", value: "€2.800" },
+      { label: "Extras Revenue", value: "€450" },
+      { label: "Total Revenue", value: "€13.450", bold: true, separatorAbove: true },
+    ],
+    topContributors: [
+      { name: "Cipher Digital", plan: "Enterprise", contribution: "€581" },
+      { name: "Beta Labs", plan: "Growth", contribution: "€548" },
+      { name: "Coral Digital", plan: "Starter", contribution: "€503" },
+      { name: "Alpha Plus", plan: "Pro", contribution: "€482" },
+      { name: "Aura Group", plan: "Growth", contribution: "€477" },
+    ],
+    dataSourceNote: "Forecast: based on active plans and subscriptions as of Feb 2026.",
     sparklineData: [8200, 9100, 9800, 10500, 11200, 12450],
   },
   {
@@ -18,7 +35,13 @@ const coreKpis = [
     delta: "+12%",
     deltaValue: 12,
     formula: "ARR = MRR × 12",
-    formulaDetail: "Annual Recurring Revenue is calculated by multiplying the current MRR by 12 months.",
+    formulaDetail: "ARR = MRR × 12",
+    formulaNote: "Annualized projection based on current MRR.",
+    breakdownItems: [
+      { label: "Current MRR", value: "€12.450" },
+      { label: "ARR (MRR × 12)", value: "€149.400", bold: true, separatorAbove: true },
+    ],
+    dataSourceNote: "Forecast: based on current MRR as of Feb 2026.",
     sparklineData: [98400, 109200, 117600, 126000, 134400, 149400],
   },
   {

@@ -6,12 +6,10 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  KpiBreakdownModal,
+  type BreakdownItem,
+  type TopContributor,
+} from "./KpiBreakdownModal";
 
 // ─── Types ───────────────────────────────────────────────────────────
 export type KpiCardState = "loaded" | "loading" | "error" | "restricted" | "empty";
@@ -21,16 +19,18 @@ export interface KpiCardProps {
   value: string;
   formula?: string;
   formulaDetail?: string;
+  formulaNote?: string;
+  breakdownItems?: BreakdownItem[];
+  topContributors?: TopContributor[];
+  dataSourceNote?: string;
   delta?: string;
-  deltaValue?: number; // positive = up, negative = down
-  invertDelta?: boolean; // true → increase is bad (red), decrease is good (green)
+  deltaValue?: number;
+  invertDelta?: boolean;
   secondaryText?: string;
   sparklineData?: number[];
   state?: KpiCardState;
   onRetry?: () => void;
-  /** "core" = row 1 (28px value, 20px pad, sparkline), "secondary" = row 2 (22px value, 16px pad, no sparkline) */
   variant?: "core" | "secondary";
-  /** Left border color class for special styling (e.g. at-risk cards) */
   leftBorderClass?: string;
 }
 
@@ -39,6 +39,10 @@ export function KpiCard({
   value,
   formula,
   formulaDetail,
+  formulaNote,
+  breakdownItems = [],
+  topContributors = [],
+  dataSourceNote,
   delta,
   deltaValue = 0,
   invertDelta = false,
@@ -186,16 +190,18 @@ export function KpiCard({
         )}
       </Card>
 
-      {/* Info Dialog */}
+      {/* KPI Breakdown Modal */}
       {formula && (
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{label}</DialogTitle>
-              <DialogDescription>{formulaDetail || formula}</DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+        <KpiBreakdownModal
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          kpiName={label}
+          formula={formulaDetail || formula}
+          formulaNote={formulaNote}
+          breakdownItems={breakdownItems}
+          topContributors={topContributors}
+          dataSourceNote={dataSourceNote}
+        />
       )}
     </>
   );
