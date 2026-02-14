@@ -8,8 +8,12 @@ import { MonthRangePicker } from "@/components/dashboard/MonthRangePicker";
 
 type DataMode = "forecast" | "real";
 
-export function DashboardHeader() {
-  const [mode, setMode] = useState<DataMode>("forecast");
+interface DashboardHeaderProps {
+  mode: DataMode;
+  onModeChange: (mode: DataMode) => void;
+}
+
+export function DashboardHeader({ mode, onModeChange }: DashboardHeaderProps) {
   const [spinning, setSpinning] = useState(false);
 
   // Month range state
@@ -46,7 +50,7 @@ export function DashboardHeader() {
 
         {/* Center: Tabs + Month Range */}
         <div className="flex flex-wrap items-center gap-3">
-          <Tabs value={mode} onValueChange={(v) => setMode(v as DataMode)}>
+          <Tabs value={mode} onValueChange={(v) => onModeChange(v as DataMode)}>
             <TabsList className="h-9">
               <TabsTrigger
                 value="forecast"
