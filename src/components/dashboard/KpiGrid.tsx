@@ -154,11 +154,13 @@ const secondaryKpis = [
 
 interface KpiGridProps {
   mode: "forecast" | "real";
+  startMonth: number | null;
+  startYear: number | null;
   endMonth: number | null;
   endYear: number | null;
 }
 
-export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
+export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiGridProps) {
   const filteredSecondaryKpis = mode === "forecast"
     ? secondaryKpis.filter((kpi) => kpi.label !== "Churn Rate" && kpi.label !== "At Risk")
     : secondaryKpis;
@@ -223,7 +225,12 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
 
       {/* Row 2 — Secondary KPIs */}
       <div>
-        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">This Month: One-Off & Usage</h2>
+        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+          Period: One-Off & Usage
+          {mode === "real" && endMonth !== null && endYear !== null && startMonth !== null && startYear !== null
+            ? ` · ${getSpanishMonth(startMonth)} ${startYear} – ${getSpanishMonth(endMonth)} ${endYear}`
+            : ""}
+        </h2>
         <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-8"}`}>
           {filteredSecondaryKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="secondary" />

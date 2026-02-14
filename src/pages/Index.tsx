@@ -34,7 +34,7 @@ const Index = () => {
         endYear={endYear}
         onApplyRange={handleApplyRange}
       />
-      <KpiGrid mode={mode} endMonth={endMonth} endYear={endYear} />
+      <KpiGrid mode={mode} startMonth={startMonth} startYear={startYear} endMonth={endMonth} endYear={endYear} />
       <AnalyticsZone />
       <WorkspaceTable />
     </div>
