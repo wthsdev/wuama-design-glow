@@ -56,7 +56,7 @@ const coreKpis = [
     sparklineData: [4800, 5100, 5300, 5600, 5750, 6200],
   },
   {
-    label: "Gross Profit",
+    label: "Recurring Gross Profit",
     value: "€6.250",
     delta: "+15%",
     deltaValue: 15,
