@@ -134,7 +134,7 @@ const secondaryKpis = [
     value: "87",
     delta: "+4",
     deltaValue: 4,
-    secondaryText: "●●●●● ●●●●● ●●●●● + 72 more",
+    secondaryText: "Onboarding 6 · At risk 5",
     formula: "Count of workspaces with active subscription",
   },
   {
