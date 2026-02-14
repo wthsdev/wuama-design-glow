@@ -146,7 +146,7 @@ export function KpiGrid() {
     <div className="space-y-4">
       {/* Row 1 — Core KPIs */}
       <div>
-        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">EOM Forecast</h2>
+        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">Recurring Run-Rate</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {coreKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="core" />
@@ -156,7 +156,7 @@ export function KpiGrid() {
 
       {/* Row 2 — Secondary KPIs */}
       <div>
-        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">Month-to-Date</h2>
+        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">This Month: One-Off & Usage</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7">
           {secondaryKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="secondary" />
