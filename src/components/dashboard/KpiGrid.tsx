@@ -164,13 +164,17 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
     : secondaryKpis;
 
   const displayCoreKpis = useMemo(() => {
-    if (mode === "real" && endMonth !== null && endYear !== null) {
-      const suffix = ` ${getSpanishMonth(endMonth)} ${endYear}`;
-      return coreKpis.map((kpi) =>
-        kpi.label === "MRR" ? { ...kpi, label: `MRR${suffix}` } : kpi
-      );
+    let kpis = coreKpis;
+    if (mode === "real") {
+      kpis = kpis.filter((kpi) => kpi.label !== "ARR");
+      if (endMonth !== null && endYear !== null) {
+        const suffix = ` ${getSpanishMonth(endMonth)} ${endYear}`;
+        kpis = kpis.map((kpi) =>
+          kpi.label === "MRR" ? { ...kpi, label: `MRR${suffix}` } : kpi
+        );
+      }
     }
-    return coreKpis;
+    return kpis;
   }, [mode, endMonth, endYear]);
 
   return (
@@ -178,7 +182,7 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
       {/* Row 1 — Core KPIs */}
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">Recurring Run-Rate</h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 ${mode === "real" ? "lg:grid-cols-4" : "lg:grid-cols-5"}`}>
           {displayCoreKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="core" />
           ))}
