@@ -163,8 +163,26 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
     ? secondaryKpis.filter((kpi) => kpi.label !== "Churn Rate" && kpi.label !== "At Risk")
     : secondaryKpis;
 
+  const totalRevenueKpi = {
+    label: "Total Revenue",
+    value: "€15.700",
+    delta: "+10%",
+    deltaValue: 10,
+    formula: "Total Revenue = MRR + Setup Fees + Extras Revenue",
+    formulaDetail: "Sum of all revenue streams: recurring subscriptions, one-time setup fees, and extra usage charges.",
+    formulaNote: "Includes all revenue streams for the selected period.",
+    dataSourceNote: "Based on invoiced data for selected period.",
+    breakdownItems: [
+      { label: "MRR (Recurring)", value: "€12.450" },
+      { label: "Setup Fees", value: "€2.800" },
+      { label: "Extras Revenue", value: "€450" },
+      { label: "Total Revenue", value: "€15.700", bold: true, separatorAbove: true },
+    ],
+    sparklineData: [9600, 10500, 11200, 11800, 12500, 15700],
+  } as (typeof coreKpis)[number];
+
   const displayCoreKpis = useMemo(() => {
-    let kpis = coreKpis;
+    let kpis = [...coreKpis];
     if (mode === "real") {
       kpis = kpis.filter((kpi) => kpi.label !== "ARR");
       if (endMonth !== null && endYear !== null) {
@@ -172,6 +190,11 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
         kpis = kpis.map((kpi) =>
           kpi.label === "MRR" ? { ...kpi, label: `MRR${suffix}` } : kpi
         );
+      }
+      // Insert Total Revenue after MRR
+      const mrrIndex = kpis.findIndex((kpi) => kpi.label.startsWith("MRR"));
+      if (mrrIndex !== -1) {
+        kpis.splice(mrrIndex + 1, 0, totalRevenueKpi);
       }
     }
     return kpis;
