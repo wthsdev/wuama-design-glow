@@ -28,6 +28,7 @@ export interface KpiCardProps {
   invertDelta?: boolean;
   secondaryText?: string;
   sparklineData?: number[];
+  deltaLabel?: string;
   state?: KpiCardState;
   onRetry?: () => void;
   variant?: "core" | "secondary";
@@ -48,6 +49,7 @@ export function KpiCard({
   invertDelta = false,
   secondaryText,
   sparklineData,
+  deltaLabel = "vs prev month",
   state = "loaded",
   onRetry,
   variant = "core",
@@ -156,7 +158,7 @@ export function KpiCard({
           <div className="mt-1.5 flex items-center gap-1 flex-nowrap">
             <DeltaIcon className={cn("h-3.5 w-3.5 shrink-0", deltaColor)} />
             <span className={cn("text-[13px] font-semibold whitespace-nowrap", deltaColor)}>{delta}</span>
-            <span className="text-xs text-muted-foreground whitespace-nowrap">vs prev month</span>
+            <span className="text-xs text-muted-foreground whitespace-nowrap">{deltaLabel}</span>
           </div>
         )}
 

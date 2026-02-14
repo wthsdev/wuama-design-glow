@@ -234,7 +234,7 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
         </h2>
         <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-8"}`}>
           {filteredSecondaryKpis.map((kpi) => (
-            <KpiCard key={kpi.label} {...kpi} variant="secondary" />
+            <KpiCard key={kpi.label} {...kpi} variant="secondary" deltaLabel={mode === "real" ? "vs previous period" : "vs prev month"} />
           ))}
         </div>
       </div>
