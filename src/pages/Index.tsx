@@ -10,17 +10,13 @@ import { RestrictedValue } from "@/components/states/RestrictedValue";
 import { PercentageDelta } from "@/components/PercentageDelta";
 import { formatCurrency, formatMonthYear, formatDayMonth } from "@/lib/formatters";
 import { TrendingUp, Users, DollarSign, BarChart3 } from "lucide-react";
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background page-padding section-spacing">
-      {/* Header */}
-      <header>
-        <h1 className="text-page-title">WUAMA Design System</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Tokens, componentes y estados globales — {formatMonthYear(new Date())}
-        </p>
-      </header>
+    <div className="section-spacing">
+      {/* Dashboard Header */}
+      <DashboardHeader />
 
       {/* ── Typography ─────────────────────────────────── */}
       <section className="section-spacing">
