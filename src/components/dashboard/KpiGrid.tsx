@@ -181,10 +181,19 @@ export function KpiGrid({ mode, endMonth, endYear }: KpiGridProps) {
     sparklineData: [9600, 10500, 11200, 11800, 12500, 15700],
   } as (typeof coreKpis)[number];
 
+  const renameMap: Record<string, string> = {
+    "WUAMA Base Cost": "WUAMA Cost",
+    "Recurring Gross Profit": "Gross Profit",
+    "Recurring Gross Margin": "Gross Margin",
+  };
+
   const displayCoreKpis = useMemo(() => {
     let kpis = [...coreKpis];
     if (mode === "real") {
       kpis = kpis.filter((kpi) => kpi.label !== "ARR");
+      kpis = kpis.map((kpi) =>
+        renameMap[kpi.label] ? { ...kpi, label: renameMap[kpi.label] } : kpi
+      );
       if (endMonth !== null && endYear !== null) {
         const suffix = ` ${getSpanishMonth(endMonth)} ${endYear}`;
         kpis = kpis.map((kpi) =>
