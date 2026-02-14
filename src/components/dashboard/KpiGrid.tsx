@@ -217,7 +217,9 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
     <div className="space-y-4">
       {/* Row 1 — Core KPIs */}
       <div>
-        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">Recurring Run-Rate</h2>
+        <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+          {mode === "real" ? "Period Totals + Latest MRR" : "Recurring Run-Rate"}
+        </h2>
         <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${mode === "real" ? "lg:grid-cols-5" : "lg:grid-cols-5"}`}>
           {displayCoreKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="core" />
