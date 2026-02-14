@@ -163,7 +163,9 @@ interface KpiGridProps {
 export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiGridProps) {
   const filteredSecondaryKpis = mode === "forecast"
     ? secondaryKpis.filter((kpi) => kpi.label !== "Churn Rate" && kpi.label !== "At Risk")
-    : secondaryKpis;
+    : secondaryKpis.map((kpi) =>
+        kpi.label === "This Month Margin" ? { ...kpi, label: "Period Margin" } : kpi
+      );
 
   const totalRevenueKpi = {
     label: "Total Revenue",
