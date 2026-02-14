@@ -222,7 +222,7 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
         </h2>
         <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${mode === "real" ? "lg:grid-cols-5" : "lg:grid-cols-5"}`}>
           {displayCoreKpis.map((kpi) => (
-            <KpiCard key={kpi.label} {...kpi} variant="core" />
+            <KpiCard key={kpi.label} {...kpi} variant="core" deltaLabel={mode === "real" ? "vs previous period" : "vs prev month"} />
           ))}
         </div>
       </div>
