@@ -65,7 +65,7 @@ const coreKpis = [
     sparklineData: [3400, 4000, 4500, 4900, 5450, 6250],
   },
   {
-    label: "Gross Margin",
+    label: "Recurring Gross Margin",
     value: "50,2%",
     delta: "+2pp",
     deltaValue: 2,
