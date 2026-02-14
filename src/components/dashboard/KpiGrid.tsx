@@ -90,7 +90,7 @@ const secondaryKpis = [
     value: "€450",
     delta: "+3%",
     deltaValue: 3,
-    secondaryText: "1.200 conv + 300 credits over",
+    secondaryText: "1.200 conversations + 300 credits over",
     formula: "Sum of overage charges + add-on purchases",
   },
   {
