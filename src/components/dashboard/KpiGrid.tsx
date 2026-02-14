@@ -236,7 +236,7 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
             ? "This Month: One-Off & Usage"
             : `Period: One-Off & Usage${startMonth !== null && startYear !== null && endMonth !== null && endYear !== null ? ` · ${getSpanishMonth(startMonth)} ${startYear} – ${getSpanishMonth(endMonth)} ${endYear}` : ""}`}
         </h2>
-        <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-8"}`}>
+        <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6`}>
           {filteredSecondaryKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="secondary" deltaLabel={mode === "real" ? "vs previous period" : "vs prev month"} />
           ))}
