@@ -99,7 +99,7 @@ const secondaryKpis = [
     delta: "+6%",
     deltaValue: 6,
     invertDelta: true,
-    secondaryText: "credit costs",
+    secondaryText: "Credit Costs",
     formula: "Sum of variable costs associated with extras (Meta fees, credit provider costs)",
   },
   {
