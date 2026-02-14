@@ -56,8 +56,8 @@ export function KpiCard({
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const isCore = variant === "core";
-  const padding = isCore ? "p-5" : "p-4";
-  const valueSize = isCore ? "text-[28px]" : "text-[22px]";
+  const padding = isCore ? "p-3.5" : "p-4";
+  const valueSize = isCore ? "text-xl" : "text-[22px]";
 
   // Delta color logic
   const isPositive = deltaValue > 0;
@@ -167,7 +167,7 @@ export function KpiCard({
 
         {/* Sparkline (core variant only) */}
         {isCore && sparklineData && sparklineData.length > 0 && !isEmpty && (
-          <div className="mt-3 h-10">
+          <div className="mt-2 h-8">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={sparklineData.map((v) => ({ v }))}>
                 <defs>
