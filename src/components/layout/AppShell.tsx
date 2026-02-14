@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { TopBar } from "@/components/layout/TopBar";
+import { HelpDrawer } from "@/components/dashboard/HelpDrawer";
 
 export function AppShell() {
   const [collapsed, setCollapsed] = useState(false);
@@ -19,6 +20,7 @@ export function AppShell() {
         <main className="flex-1 overflow-y-auto page-padding">
           <Outlet />
         </main>
+        <HelpDrawer />
       </div>
     </div>
   );
