@@ -141,7 +141,15 @@ const secondaryKpis = [
   },
 ];
 
-export function KpiGrid() {
+interface KpiGridProps {
+  mode: "forecast" | "real";
+}
+
+export function KpiGrid({ mode }: KpiGridProps) {
+  const filteredSecondaryKpis = mode === "forecast"
+    ? secondaryKpis.filter((kpi) => kpi.label !== "Churn Rate")
+    : secondaryKpis;
+
   return (
     <div className="space-y-4">
       {/* Row 1 — Core KPIs */}
@@ -157,8 +165,8 @@ export function KpiGrid() {
       {/* Row 2 — Secondary KPIs */}
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">This Month: One-Off & Usage</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7">
-          {secondaryKpis.map((kpi) => (
+        <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-7"}`}>
+          {filteredSecondaryKpis.map((kpi) => (
             <KpiCard key={kpi.label} {...kpi} variant="secondary" />
           ))}
         </div>
