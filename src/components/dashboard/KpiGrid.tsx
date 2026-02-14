@@ -94,6 +94,15 @@ const secondaryKpis = [
     formula: "Sum of overage charges + add-on purchases",
   },
   {
+    label: "Extras Cost",
+    value: "€180",
+    delta: "+6%",
+    deltaValue: 6,
+    invertDelta: true,
+    secondaryText: "Meta fees + credit costs",
+    formula: "Sum of variable costs associated with extras (Meta fees, credit provider costs)",
+  },
+  {
     label: "Net New MRR",
     value: "+€1.250",
     delta: "+€1.250",
@@ -143,7 +152,7 @@ export function KpiGrid() {
       </div>
 
       {/* Row 2 — Secondary KPIs */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-7">
         {secondaryKpis.map((kpi) => (
           <KpiCard key={kpi.label} {...kpi} variant="secondary" />
         ))}
