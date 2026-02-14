@@ -6,22 +6,21 @@ import {
   ShieldAlert,
   ChevronRight,
   CheckCircle,
-  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { AlertListDrawer, type AlertWorkspaceItem, type AlertSeverity } from "./AlertListDrawer";
 
 interface AlertItem {
   id: string;
   type: string;
   count: number;
   countLabel: string;
-  severity: "critical" | "warning" | "info";
-  workspaces?: string[];
+  severity: AlertSeverity;
+  drawerWorkspaces: AlertWorkspaceItem[];
 }
 
 const alerts: AlertItem[] = [
@@ -31,7 +30,12 @@ const alerts: AlertItem[] = [
     count: 4,
     countLabel: "4 workspaces",
     severity: "warning",
-    workspaces: ["Acme Corp", "Globex SA", "Initech SL", "Umbrella Ltd"],
+    drawerWorkspaces: [
+      { name: "Acme Corp", status: "active", metric: "Projected: 8.600 / 8.000 included (107%)", progressPct: 107 },
+      { name: "Globex SA", status: "active", metric: "Projected: 5.200 / 5.000 included (104%)", progressPct: 104 },
+      { name: "Initech SL", status: "active", metric: "Projected: 3.100 / 3.000 included (103%)", progressPct: 103 },
+      { name: "Umbrella Ltd", status: "active", metric: "Projected: 4.500 / 4.000 included (112%)", progressPct: 112 },
+    ],
   },
   {
     id: "credit",
@@ -39,7 +43,10 @@ const alerts: AlertItem[] = [
     count: 2,
     countLabel: "2 workspaces",
     severity: "warning",
-    workspaces: ["Globex SA", "Wayne Enterprises"],
+    drawerWorkspaces: [
+      { name: "Globex SA", status: "active", metric: "Projected: 12.500 / 10.000 included (125%)", progressPct: 125 },
+      { name: "Wayne Enterprises", status: "active", metric: "Projected: 8.800 / 8.000 included (110%)", progressPct: 110 },
+    ],
   },
   {
     id: "margin",
@@ -47,7 +54,9 @@ const alerts: AlertItem[] = [
     count: 1,
     countLabel: "1 workspace",
     severity: "critical",
-    workspaces: ["Stark Industries"],
+    drawerWorkspaces: [
+      { name: "Stark Industries", status: "active", metric: "Margin: -€45 (-5,6%)", metricDetail: "negative" },
+    ],
   },
   {
     id: "overdue",
@@ -55,7 +64,11 @@ const alerts: AlertItem[] = [
     count: 3,
     countLabel: "3 invoices",
     severity: "critical",
-    workspaces: ["Acme Corp", "Umbrella Ltd", "Oscorp"],
+    drawerWorkspaces: [
+      { name: "Acme Corp", status: "active", metric: "Invoice #1234 — €799 — 15 days overdue", metricDetail: "negative" },
+      { name: "Umbrella Ltd", status: "active", metric: "Invoice #1267 — €450 — 8 days overdue", metricDetail: "negative" },
+      { name: "Oscorp", status: "paused", metric: "Invoice #1301 — €1.200 — 22 days overdue", metricDetail: "negative" },
+    ],
   },
   {
     id: "onboarding",
@@ -63,7 +76,10 @@ const alerts: AlertItem[] = [
     count: 2,
     countLabel: "2 workspaces",
     severity: "info",
-    workspaces: ["Daily Planet", "LexCorp"],
+    drawerWorkspaces: [
+      { name: "Daily Planet", status: "onboarding", metric: "Last activity: 12 days ago" },
+      { name: "LexCorp", status: "onboarding", metric: "Last activity: 9 days ago" },
+    ],
   },
 ];
 
@@ -160,34 +176,17 @@ export function AlertCenter() {
         </div>
       </Card>
 
-      {/* Alert Detail Drawer */}
-      <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
-        <SheetContent className="w-[380px] bg-card sm:max-w-[380px]">
-          <SheetHeader className="mb-4">
-            <SheetTitle className="flex items-center gap-2">
-              {selectedAlert && (() => {
-                const cfg = severityConfig[selectedAlert.severity];
-                const Icon = cfg.icon;
-                return <Icon className={cn("h-5 w-5", cfg.iconClass)} />;
-              })()}
-              {selectedAlert?.type}
-            </SheetTitle>
-          </SheetHeader>
-          <div className="space-y-2">
-            {selectedAlert?.workspaces?.map((ws) => (
-              <div
-                key={ws}
-                className="flex items-center justify-between rounded-md border bg-background p-3"
-              >
-                <span className="text-sm font-medium">{ws}</span>
-                <Button variant="outline" size="sm" className="h-7 text-xs">
-                  Details
-                </Button>
-              </div>
-            ))}
-          </div>
-        </SheetContent>
-      </Sheet>
+      {/* Alert List Drawer */}
+      <AlertListDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        alertType={selectedAlert?.type ?? ""}
+        severity={selectedAlert?.severity ?? "warning"}
+        workspaces={selectedAlert?.drawerWorkspaces ?? []}
+        onApplyFilter={() => {
+          // Placeholder: would apply filter to workspace table
+        }}
+      />
     </>
   );
 }
