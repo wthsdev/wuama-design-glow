@@ -226,10 +226,9 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
       {/* Row 2 — Secondary KPIs */}
       <div>
         <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-          Period: One-Off & Usage
-          {mode === "real" && endMonth !== null && endYear !== null && startMonth !== null && startYear !== null
-            ? ` · ${getSpanishMonth(startMonth)} ${startYear} – ${getSpanishMonth(endMonth)} ${endYear}`
-            : ""}
+          {mode === "forecast"
+            ? "This Month: One-Off & Usage"
+            : `Period: One-Off & Usage${startMonth !== null && startYear !== null && endMonth !== null && endYear !== null ? ` · ${getSpanishMonth(startMonth)} ${startYear} – ${getSpanishMonth(endMonth)} ${endYear}` : ""}`}
         </h2>
         <div className={`grid grid-cols-2 gap-4 sm:grid-cols-3 ${mode === "forecast" ? "lg:grid-cols-6" : "lg:grid-cols-8"}`}>
           {filteredSecondaryKpis.map((kpi) => (
