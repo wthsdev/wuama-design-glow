@@ -103,11 +103,12 @@ const secondaryKpis = [
     formula: "Sum of variable costs associated with extras (Meta fees, credit provider costs)",
   },
   {
-    label: "One-Off Margin",
+    label: "This Month Margin",
     value: "€2.170",
     delta: "+4%",
     deltaValue: 4,
-    formula: "One-Off Margin = (Setup Fees + Extras Revenue) − Extras Cost",
+    secondaryText: "Installation + extra usage only",
+    formula: "This Month Margin = (Setup Fees + Extras Revenue) − Extras Cost",
     formulaDetail: "Margin generated from non-recurring revenue streams after deducting variable costs.",
   },
   {
