@@ -84,7 +84,7 @@ export default function WorkspaceDetail() {
           value={formatCurrency(ws.cost)}
           extra={
             <Button variant="outline" size="sm" className="mt-2 h-7 text-xs">
-              Ver Desglose Wama Cost
+              Ver Desglose Cost
             </Button>
           }
         />
