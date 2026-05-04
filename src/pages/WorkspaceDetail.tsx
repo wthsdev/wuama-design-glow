@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft, Settings, DollarSign, Wallet, PiggyBank, CheckCircle2,
   BarChart3, Plus, ExternalLink, Pencil, Bot, Link2, Sparkles, ChevronDown,
@@ -20,9 +20,9 @@ import {
 import { generateMockWorkspaces } from "@/components/dashboard/workspace-table/mock-data";
 
 const FLOWS = [
-  { asset: "Atención al cliente WhatsApp", canal: "WhatsApp" },
-  { asset: "Proveedores Telegram", canal: "WhatsApp" },
-  { asset: "Consultas Email", canal: "WhatsApp" },
+  { id: "f1", asset: "Atención al cliente WhatsApp", canal: "WhatsApp" },
+  { id: "f2", asset: "Proveedores Telegram", canal: "WhatsApp" },
+  { id: "f3", asset: "Consultas Email", canal: "WhatsApp" },
 ];
 
 const USERS = [
@@ -34,6 +34,7 @@ const CHANNELS = ["Website Widget", "WhatsApp", "Instagram"];
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const all = useMemo(() => generateMockWorkspaces(87), []);
   const ws = all.find((w) => w.id === id) ?? all[0];
 
@@ -157,7 +158,11 @@ export default function WorkspaceDetail() {
                 const profit = revenue - cost;
                 const margen = Math.round((profit / revenue) * 100);
                 return (
-                  <TableRow key={i}>
+                  <TableRow
+                    key={i}
+                    className="cursor-pointer"
+                    onClick={() => navigate(`/workspaces/${ws.id}/flows/${f.id}`)}
+                  >
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Bot className="h-4 w-4 text-muted-foreground" />
@@ -172,9 +177,14 @@ export default function WorkspaceDetail() {
                     <TableCell>
                       <Badge variant="success" className="text-[11px]">Activo</Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-1">
-                        <Button variant="outline" size="sm" className="h-7 gap-1 text-xs">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 gap-1 text-xs"
+                          onClick={() => navigate(`/workspaces/${ws.id}/flows/${f.id}`)}
+                        >
                           Ver <ExternalLink className="h-3 w-3" />
                         </Button>
                         <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
