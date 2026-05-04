@@ -92,9 +92,8 @@ export default function WorkspaceDetail() {
         />
       </div>
 
-      {/* Payment Status + Agent Performance */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card>
+      {/* Payment Status */}
+      <Card>
           <CardHeader>
             <CardTitle>Payment Status</CardTitle>
             <CardDescription>Current billing and payment information</CardDescription>
@@ -109,25 +108,7 @@ export default function WorkspaceDetail() {
             </div>
             <Button className="w-full">Send Payment Link to Client</Button>
           </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Agent Performance</CardTitle>
-            <CardDescription>Key metrics and activity</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between rounded-md border p-3">
-              <div className="flex flex-col">
-                <span className="text-xs text-muted-foreground">Total Conversations</span>
-                <span className="text-xl font-semibold tabular-nums">{ws.convUsed.toLocaleString()}</span>
-              </div>
-              <BarChart3 className="h-5 w-5 text-primary" />
-            </div>
-            <Button variant="secondary" className="w-full">View Full Analytics</Button>
-          </CardContent>
-        </Card>
-      </div>
+      </Card>
 
       {/* Flows */}
       <Card>
