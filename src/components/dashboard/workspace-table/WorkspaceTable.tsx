@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search, SlidersHorizontal, Download, ArrowUpDown, ArrowUp, ArrowDown,
   MoreHorizontal, Check, AlertTriangle, Lock, RefreshCw,
@@ -65,6 +66,7 @@ function marginColor(v: number) {
 
 // ── Component ───────────────────────────────────────────────────────
 export function WorkspaceTable() {
+  const navigate = useNavigate();
   const allData = useMemo(() => generateMockWorkspaces(87), []);
 
   const [filter, setFilter] = useState<QuickFilter>("all");
@@ -332,7 +334,7 @@ export function WorkspaceTable() {
                     "cursor-pointer transition-colors",
                     negMargin && "border-l-[3px] border-l-destructive",
                   )}
-                  onClick={() => toast.info("Detail page coming soon")}
+                  onClick={() => navigate(`/workspaces/${ws.id}`)}
                 >
                   {/* Workspace */}
                   <TableCell>
