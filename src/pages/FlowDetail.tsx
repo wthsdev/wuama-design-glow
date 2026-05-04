@@ -81,7 +81,7 @@ export default function FlowDetail() {
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
             <FinTile label="Flow Revenue" value={formatCurrency(revenue)} sub="Mensual" />
-            <FinTile label="WAMA Cost" value={formatCurrency(cost)} sub="Mensual" />
+            <FinTile label="Cost" value={formatCurrency(cost)} sub="Mensual" />
             <FinTile label="Flow Profit" value={formatCurrency(profit)} sub="Mensual" />
             <FinTile label="Margen" value={`${margin}%`} sub="Rentable" />
           </div>

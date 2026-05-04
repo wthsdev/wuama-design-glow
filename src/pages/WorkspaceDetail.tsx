@@ -80,7 +80,7 @@ export default function WorkspaceDetail() {
         />
         <KpiTile
           icon={<Wallet className="h-5 w-5" />}
-          label="Total WAMA Cost"
+          label="Total Cost"
           value={formatCurrency(ws.cost)}
           extra={
             <Button variant="outline" size="sm" className="mt-2 h-7 text-xs">
@@ -144,7 +144,7 @@ export default function WorkspaceDetail() {
                 <TableHead>Asset</TableHead>
                 <TableHead>Canal</TableHead>
                 <TableHead className="text-right">Revenue</TableHead>
-                <TableHead className="text-right">WAMA Cost</TableHead>
+                <TableHead className="text-right">Cost</TableHead>
                 <TableHead className="text-right">Profit</TableHead>
                 <TableHead className="text-right">Margen</TableHead>
                 <TableHead>Estado</TableHead>
