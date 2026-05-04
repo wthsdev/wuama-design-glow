@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft, Settings, DollarSign, Wallet, PiggyBank, CheckCircle2,
-  BarChart3, Plus, ExternalLink, Pencil, Bot,
+  BarChart3, Plus, ExternalLink, Pencil, Bot, Link2, Sparkles, ChevronDown,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -11,6 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -114,9 +117,24 @@ export default function WorkspaceDetail() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Flows del Workspace</CardTitle>
-          <Button variant="outline" size="sm" className="gap-1.5 text-primary">
-            <Plus className="h-4 w-4" /> Crear nuevo Flow
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-1.5 text-primary">
+                <Plus className="h-4 w-4" /> Añadir nuevo Flow
+                <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem className="gap-2">
+                <Link2 className="h-4 w-4" />
+                Añadir flow (n8n o Claude Code)
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                Crear flow
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
