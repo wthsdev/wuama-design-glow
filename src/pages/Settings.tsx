@@ -8,6 +8,8 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle2, FileCheck2 } from "lucide-react";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -15,6 +17,9 @@ export default function Settings() {
   const [email, setEmail] = useState("partner@example.com");
   const [currency, setCurrency] = useState("USD");
   const [withdrawal, setWithdrawal] = useState("bank");
+  const [verifactuConnected, setVerifactuConnected] = useState(false);
+  const [verifactuNif, setVerifactuNif] = useState("");
+  const [verifactuCert, setVerifactuCert] = useState("");
 
   return (
     <div className="section-spacing max-w-3xl">
