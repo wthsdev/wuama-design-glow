@@ -47,7 +47,7 @@ const coreKpis = [
     sparklineData: [98400, 109200, 117600, 126000, 134400, 149400],
   },
   {
-    label: "WUAMA Base Cost",
+    label: "Base Cost",
     value: "€6.200",
     delta: "+8%",
     deltaValue: 8,
@@ -62,7 +62,7 @@ const coreKpis = [
     value: "€6.250",
     delta: "+15%",
     deltaValue: 15,
-    formula: "Gross Profit = MRR − WUAMA Cost",
+    formula: "Gross Profit = MRR − Base Cost",
     formulaDetail: "Revenue minus direct costs. Represents the margin available before operational expenses.",
     sparklineData: [3400, 4000, 4500, 4900, 5450, 6250],
   },
@@ -188,7 +188,7 @@ export function KpiGrid({ mode, startMonth, startYear, endMonth, endYear }: KpiG
   } as (typeof coreKpis)[number];
 
   const renameMap: Record<string, string> = {
-    "WUAMA Base Cost": "WUAMA Cost",
+    "Base Cost": "Cost",
     "Recurring Gross Profit": "Gross Profit",
     "Recurring Gross Margin": "Gross Margin",
   };
