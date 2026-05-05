@@ -77,13 +77,10 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
                   "relative w-full justify-start gap-3 h-10 text-sm font-medium",
                   collapsed ? "justify-center px-0" : "px-3",
                   active
-                    ? "bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary"
+                    ? "bg-gradient-primary text-primary-foreground hover:opacity-95 hover:text-primary-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
-                {active && (
-                  <span className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-sm bg-primary" />
-                )}
                 <item.icon className="h-[18px] w-[18px] shrink-0" />
                 {!collapsed && <span>{item.label}</span>}
               </Button>
@@ -168,13 +165,10 @@ export function SidebarContent({ onClose }: { onClose: () => void }) {
                 className={cn(
                   "relative w-full justify-start gap-3 h-10 text-sm font-medium px-3",
                   active
-                    ? "bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary"
+                    ? "bg-gradient-primary text-primary-foreground hover:opacity-95 hover:text-primary-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
-                {active && (
-                  <span className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-sm bg-primary" />
-                )}
                 <item.icon className="h-[18px] w-[18px] shrink-0" />
                 <span>{item.label}</span>
               </Button>
