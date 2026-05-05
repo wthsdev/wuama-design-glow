@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Bot, Users, ExternalLink } from "lucide-react";
+import { Plus, Bot, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -34,9 +34,7 @@ export default function Workspaces() {
           </h2>
 
           <div className="space-y-3">
-            {visible.map((ws) => {
-              const conv = ws.convUsed;
-              return (
+            {visible.map((ws) => (
                 <div
                   key={ws.id}
                   className="flex items-center justify-between gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/40"
@@ -49,9 +47,6 @@ export default function Workspaces() {
                       <span className="font-heading text-base font-semibold">{ws.name}</span>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{ws.plan}</span>
-                        <span className="opacity-50">|</span>
-                        <Users className="h-3.5 w-3.5" />
-                        <span>{conv.toLocaleString("es-ES")} conversations</span>
                       </div>
                     </div>
                   </div>
@@ -70,8 +65,7 @@ export default function Workspaces() {
                     </Button>
                   </div>
                 </div>
-              );
-            })}
+            ))}
           </div>
         </CardContent>
       </Card>
