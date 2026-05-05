@@ -36,8 +36,8 @@ export function DashboardHeader({ mode, onModeChange, startMonth, startYear, end
           </p>
         </div>
 
-        {/* Center: Month Range — only for Real */}
-        <div className="flex flex-wrap items-center gap-3">
+        {/* Right: Month Range + Updated + Refresh */}
+        <div className="ml-auto flex flex-wrap items-center gap-2">
           {mode === "real" && (
             <MonthRangePicker
               startMonth={startMonth}
@@ -47,10 +47,6 @@ export function DashboardHeader({ mode, onModeChange, startMonth, startYear, end
               onApply={onApplyRange}
             />
           )}
-        </div>
-
-        {/* Right: Updated + Refresh */}
-        <div className="flex items-center gap-2">
           <Badge variant="outline" className="gap-1.5 text-xs font-normal text-muted-foreground">
             <Clock className="h-3 w-3" />
             Updated 5 min ago
