@@ -28,7 +28,6 @@ const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/" },
   { label: "Workspaces", icon: Building2, href: "/workspaces" },
   { label: "Invoices", icon: Receipt, href: "/invoices" },
-  { label: "Plans & Pricing", icon: CreditCard, href: "/plans" },
   { label: "Settings", icon: Settings, href: "/settings" },
 ];
 
