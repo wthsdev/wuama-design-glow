@@ -269,9 +269,6 @@ export function WorkspaceTable() {
               <TableHead className="w-[100px] cursor-pointer select-none text-right" onClick={() => toggleSort("marginPct")}>
                 <span className="inline-flex items-center justify-end w-full">Margin % <SortIcon field="marginPct" /></span>
               </TableHead>
-              <TableHead className="w-[140px] cursor-pointer select-none" onClick={() => toggleSort("convUsed")}>
-                <span className="inline-flex items-center">Conversations <SortIcon field="convUsed" /></span>
-              </TableHead>
               <TableHead className="w-[120px] cursor-pointer select-none" onClick={() => toggleSort("creditsUsed")}>
                 <span className="inline-flex items-center">Credits <SortIcon field="creditsUsed" /></span>
               </TableHead>
@@ -287,7 +284,7 @@ export function WorkspaceTable() {
             {/* Loading */}
             {isLoading && Array.from({ length: 8 }).map((_, i) => (
               <TableRow key={`sk-${i}`}>
-                {Array.from({ length: 11 }).map((_, j) => (
+                {Array.from({ length: 10 }).map((_, j) => (
                   <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>
                 ))}
               </TableRow>
@@ -296,7 +293,7 @@ export function WorkspaceTable() {
             {/* Empty – no data at all */}
             {!isLoading && allData.length === 0 && (
               <TableRow>
-                <TableCell colSpan={11}>
+                <TableCell colSpan={10}>
                   <EmptyState
                     title="No workspaces yet"
                     description="Create your first workspace to start tracking."
@@ -310,7 +307,7 @@ export function WorkspaceTable() {
             {/* Empty – filters return nothing */}
             {!isLoading && allData.length > 0 && paginated.length === 0 && (
               <TableRow>
-                <TableCell colSpan={11}>
+                <TableCell colSpan={10}>
                   <div className="flex flex-col items-center py-12 text-center">
                     <p className="text-sm text-muted-foreground">No workspaces match your filters</p>
                     <Button variant="ghost" size="sm" className="mt-2" onClick={() => { setFilter("all"); setSearch(""); }}>
