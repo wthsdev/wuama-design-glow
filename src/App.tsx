@@ -11,6 +11,7 @@ import FlowDetail from "./pages/FlowDetail";
 import Workspaces from "./pages/Workspaces";
 import NewWorkspace from "./pages/NewWorkspace";
 import Settings from "./pages/Settings";
+import Invoices from "./pages/Invoices";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/workspaces/new" element={<NewWorkspace />} />
             <Route path="/workspaces/:id" element={<WorkspaceDetail />} />
             <Route path="/workspaces/:id/flows/:flowId" element={<FlowDetail />} />
+            <Route path="/invoices" element={<Invoices />} />
             <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           </Route>
