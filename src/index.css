@@ -1,31 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Satoshi";
+  src: url("/src/assets/fonts/Satoshi-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/src/assets/fonts/Satoshi-VariableItalic.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 20% 10%;
+    /* Wuama tokens */
+    --background: 0 0% 97%;            /* #f8f8f8 */
+    --foreground: 0 0% 3%;              /* #080808 */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 0 0% 9%;         /* #171717 */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 221 83% 53%;
+    --primary: 217 89% 52%;             /* #1C68E9 */
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 215 100% 56%;       /* #1E75FF */
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 0 0% 93%;              /* #eeeeee */
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 0 0% 97%;                  /* #f7f7f7 */
+    --muted-foreground: 0 0% 53%;       /* #878787 */
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 100%;                /* hover surface, near-invisible */
+    --accent-foreground: 222 47% 11%;
+
+    /* Secondary surface — table body, page wells, selected rows */
+    --surface-2: 210 20% 97%;           /* #F6F8FA */
+    --surface-2-foreground: 0 0% 9%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -33,49 +52,56 @@
     --warning: 38 92% 50%;
     --warning-foreground: 38 92% 14%;
 
-    --success: 142 71% 45%;
+    --success: 142 64% 49%;             /* #25D366-like */
     --success-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
+    --border: 0 0% 91%;                 /* hairline neutral */
+    --input: 214 32% 91%;
+    --ring: 0 0% 71%;                   /* neutral focus ring */
 
-    --radius: 0.5rem;
+    --radius: 0.625rem;                 /* 10px base */
 
     --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
     --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 221 83% 53%;
+    /* Wuama brand gradient */
+    --gradient-primary: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-glow)));
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 27%;
+    --sidebar-primary: 217 89% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 91% 95%;
-    --sidebar-accent-foreground: 221 83% 53%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-accent: 210 20% 97%;
+    --sidebar-accent-foreground: 217 89% 52%;
+    --sidebar-border: 0 0% 91%;
+    --sidebar-ring: 217 89% 52%;
   }
 
   .dark {
-    --background: 220 20% 7%;
-    --foreground: 220 14% 96%;
+    --background: 0 0% 3%;              /* #080808 */
+    --foreground: 0 0% 100%;
 
-    --card: 220 20% 10%;
-    --card-foreground: 220 14% 96%;
+    --card: 0 0% 9%;                    /* #171717 */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 220 14% 96%;
+    --popover: 0 0% 8%;                 /* #151515 */
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 217 91% 60%;             /* #3b82f6 */
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 215 100% 60%;
 
-    --secondary: 220 20% 16%;
-    --secondary-foreground: 220 14% 96%;
+    --secondary: 252 6% 10%;            /* #18171b */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 20% 16%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 0 0% 17%;
+    --muted-foreground: 0 0% 71%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 4% 14%;               /* #202225 */
+    --accent-foreground: 210 40% 98%;
+
+    --surface-2: 0 0% 12%;
+    --surface-2-foreground: 210 40% 98%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
@@ -86,20 +112,22 @@
     --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
 
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 217 91% 60%;
+    --border: 0 0% 14%;
+    --input: 0 0% 13%;
+    --ring: 0 0% 50%;
 
     --shadow-card: 0 1px 3px rgba(0,0,0,0.2);
     --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.3);
 
-    --sidebar-background: 220 20% 7%;
-    --sidebar-foreground: 220 14% 96%;
+    --gradient-primary: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-glow)));
+
+    --sidebar-background: 0 0% 9%;
+    --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 16%;
-    --sidebar-accent-foreground: 220 14% 96%;
-    --sidebar-border: 220 20% 18%;
+    --sidebar-accent: 240 4% 14%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 0 0% 14%;
     --sidebar-ring: 217 91% 60%;
   }
 }
@@ -111,6 +139,7 @@
 
   body {
     @apply bg-background text-foreground font-body text-sm antialiased;
+    font-feature-settings: "ss01", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -121,7 +150,7 @@
 /* Typography utility classes */
 @layer components {
   .text-page-title {
-    @apply font-heading text-[28px] font-semibold leading-tight;
+    @apply font-heading text-2xl font-bold leading-tight;
   }
 
   .text-section-title {
@@ -129,16 +158,16 @@
   }
 
   .text-card-label {
-    @apply text-xs font-medium uppercase tracking-wider text-muted-foreground;
+    @apply text-xs font-medium text-muted-foreground;
   }
 
   .text-kpi {
-    @apply font-heading text-[28px] font-bold leading-none;
+    @apply font-heading text-2xl font-bold leading-none;
   }
 
   /* Page layout */
   .page-padding {
-    @apply px-6 py-6 md:px-6 max-md:px-4 max-md:py-4;
+    @apply px-8 py-3 md:px-8 max-md:px-4 max-md:py-3;
   }
 
   .section-spacing {
@@ -147,5 +176,20 @@
 
   .card-grid {
     @apply grid gap-4;
+  }
+
+  /* Wuama: secondary surface "well" used for tables / lists */
+  .surface-well {
+    @apply rounded-xl bg-[hsl(var(--surface-2))] p-6;
+  }
+
+  /* Wuama: brand gradient backgrounds (active nav, selected rows) */
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  /* Wuama: cards use a hairline ring instead of border + shadow */
+  .ring-hairline {
+    @apply ring-1 ring-foreground/10;
   }
 }
