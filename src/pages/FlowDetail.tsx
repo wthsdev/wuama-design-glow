@@ -12,6 +12,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { generateMockWorkspaces } from "@/components/dashboard/workspace-table/mock-data";
 
@@ -40,6 +42,9 @@ export default function FlowDetail() {
 
   const [method, setMethod] = useState<"fixed" | "percentage">("fixed");
   const [marginInput, setMarginInput] = useState(margin.toString());
+  const [monthlyPrice, setMonthlyPrice] = useState(revenue.toString());
+  const [setupEnabled, setSetupEnabled] = useState(true);
+  const [setupFee, setSetupFee] = useState("500");
 
   return (
     <div className="section-spacing">
@@ -103,6 +108,15 @@ export default function FlowDetail() {
           <CardDescription>Define cuánto cobrar al cliente por este flow</CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
+          {/* Cobro Mensual */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col">
+                <Label className="text-sm font-semibold">Cobro Mensual Recurrente</Label>
+                <span className="text-xs text-muted-foreground">Cantidad facturada cada mes al cliente</span>
+              </div>
+            </div>
+
           <div className="space-y-2">
             <Label className="text-sm">Método de Cobro</Label>
             <RadioGroup value={method} onValueChange={(v) => setMethod(v as "fixed" | "percentage")} className="space-y-2">
@@ -125,14 +139,29 @@ export default function FlowDetail() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="margin">Margen de Beneficio (%)</Label>
-              <Input
-                id="margin"
-                type="number"
-                value={marginInput}
-                onChange={(e) => setMarginInput(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">Basado en un coste base de {formatCurrency(cost)}</p>
+              {method === "fixed" ? (
+                <>
+                  <Label htmlFor="monthly-price">Precio Mensual (€)</Label>
+                  <Input
+                    id="monthly-price"
+                    type="number"
+                    value={monthlyPrice}
+                    onChange={(e) => setMonthlyPrice(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">Cantidad fija facturada cada mes</p>
+                </>
+              ) : (
+                <>
+                  <Label htmlFor="margin">Margen de Beneficio (%)</Label>
+                  <Input
+                    id="margin"
+                    type="number"
+                    value={marginInput}
+                    onChange={(e) => setMarginInput(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">Basado en un coste base de {formatCurrency(cost)}</p>
+                </>
+              )}
             </div>
             <Card className="bg-muted/30">
               <CardContent className="space-y-2 p-4 text-sm">
@@ -144,6 +173,44 @@ export default function FlowDetail() {
                 <Row label="Margen:" value={`${margin}%`} bold />
               </CardContent>
             </Card>
+          </div>
+          </div>
+
+          <Separator />
+
+          {/* Pago Único de Instalación */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col">
+                <Label className="text-sm font-semibold">Pago Fijo de Instalación</Label>
+                <span className="text-xs text-muted-foreground">Cobro único al activar el flow (setup fee)</span>
+              </div>
+              <Switch checked={setupEnabled} onCheckedChange={setSetupEnabled} />
+            </div>
+
+            {setupEnabled && (
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="setup-fee">Importe de Instalación (€)</Label>
+                  <Input
+                    id="setup-fee"
+                    type="number"
+                    value={setupFee}
+                    onChange={(e) => setSetupFee(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">Se factura una sola vez al inicio</p>
+                </div>
+                <Card className="bg-muted/30">
+                  <CardContent className="space-y-2 p-4 text-sm">
+                    <p className="font-semibold">Resumen Setup</p>
+                    <Row label="Pago único:" value={formatCurrency(Number(setupFee) || 0)} />
+                    <Row label="Frecuencia:" value="Una sola vez" />
+                    <div className="my-1 border-t" />
+                    <Row label="Total inicial:" value={formatCurrency(Number(setupFee) || 0)} bold />
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </div>
 
           <Button className="w-full gap-2">
