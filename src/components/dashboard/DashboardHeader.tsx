@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MonthRangePicker } from "@/components/dashboard/MonthRangePicker";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type DataMode = "forecast" | "real";
 
@@ -38,6 +39,12 @@ export function DashboardHeader({ mode, onModeChange, startMonth, startYear, end
 
         {/* Right: Month Range + Updated + Refresh */}
         <div className="ml-auto flex flex-wrap items-center gap-2">
+          <Tabs value={mode} onValueChange={(v) => onModeChange(v as DataMode)}>
+            <TabsList className="h-9">
+              <TabsTrigger value="forecast" className="text-xs">Previsión</TabsTrigger>
+              <TabsTrigger value="real" className="text-xs">Real</TabsTrigger>
+            </TabsList>
+          </Tabs>
           {mode === "real" && (
             <MonthRangePicker
               startMonth={startMonth}
