@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
-        body: ['"DM Sans"', "system-ui", "sans-serif"],
+        heading: ["Satoshi", "ui-sans-serif", "system-ui", "sans-serif"],
+        body: ["Satoshi", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -26,6 +27,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -59,6 +61,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "surface-2": {
+          DEFAULT: "hsl(var(--surface-2))",
+          foreground: "hsl(var(--surface-2-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -71,13 +77,19 @@ export default {
         },
       },
       borderRadius: {
-        lg: "10px",
-        md: "8px",
-        sm: "6px",
+        sm: "0.375rem",
+        md: "0.5rem",
+        lg: "0.625rem",
+        xl: "0.875rem",
+        "2xl": "1.125rem",
+        "3xl": "1.375rem",
       },
       boxShadow: {
         card: "var(--shadow-card)",
         "card-hover": "var(--shadow-card-hover)",
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
       },
       keyframes: {
         "accordion-down": {
