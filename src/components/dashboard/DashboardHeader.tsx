@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
-import { TrendingUp, FileText, Clock, RefreshCw } from "lucide-react";
+import { Clock, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MonthRangePicker } from "@/components/dashboard/MonthRangePicker";
@@ -37,34 +36,8 @@ export function DashboardHeader({ mode, onModeChange, startMonth, startYear, end
           </p>
         </div>
 
-        {/* Center: Tabs + Month Range */}
+        {/* Center: Month Range — only for Real */}
         <div className="flex flex-wrap items-center gap-3">
-          <Tabs value={mode} onValueChange={(v) => onModeChange(v as DataMode)}>
-            <TabsList className="h-9">
-              <TabsTrigger
-                value="forecast"
-                className={cn(
-                  "gap-1.5 text-xs",
-                  mode === "forecast" && "bg-primary text-primary-foreground shadow-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
-                )}
-              >
-                <TrendingUp className="h-3.5 w-3.5" />
-                Forecast
-              </TabsTrigger>
-              <TabsTrigger
-                value="real"
-                className={cn(
-                  "gap-1.5 text-xs",
-                  mode === "real" && "bg-primary text-primary-foreground shadow-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
-                )}
-              >
-                <FileText className="h-3.5 w-3.5" />
-                Real
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          {/* Month range — only for Real */}
           {mode === "real" && (
             <MonthRangePicker
               startMonth={startMonth}
