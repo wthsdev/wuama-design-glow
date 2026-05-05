@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import WorkspaceDetail from "./pages/WorkspaceDetail";
 import FlowDetail from "./pages/FlowDetail";
 import Workspaces from "./pages/Workspaces";
+import NewWorkspace from "./pages/NewWorkspace";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route element={<AppShell />}>
             <Route path="/" element={<Index />} />
             <Route path="/workspaces" element={<Workspaces />} />
+            <Route path="/workspaces/new" element={<NewWorkspace />} />
             <Route path="/workspaces/:id" element={<WorkspaceDetail />} />
             <Route path="/workspaces/:id/flows/:flowId" element={<FlowDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
