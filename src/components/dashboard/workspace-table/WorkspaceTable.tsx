@@ -320,7 +320,6 @@ export function WorkspaceTable() {
 
             {/* Data rows */}
             {!isLoading && paginated.map(ws => {
-              const convPct = Math.round((ws.convUsed / ws.convIncluded) * 100);
               const creditPct = Math.round((ws.creditsUsed / ws.creditsIncluded) * 100);
               const negMargin = ws.marginPct < 0;
 
@@ -373,16 +372,6 @@ export function WorkspaceTable() {
                           className={cn("h-full rounded-full transition-all", ws.marginPct >= 40 ? "bg-success" : ws.marginPct >= 20 ? "bg-warning" : "bg-destructive")}
                           style={{ width: `${Math.min(100, Math.max(0, ws.marginPct))}%` }}
                         />
-                      </div>
-                    </div>
-                  </TableCell>
-
-                  {/* Conversations */}
-                  <TableCell>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground">{ws.convUsed.toLocaleString("es-ES")} / {ws.convIncluded.toLocaleString("es-ES")}</span>
-                      <div className="h-1.5 w-full max-w-[100px] overflow-hidden rounded-full bg-muted">
-                        <div className={cn("h-full rounded-full transition-all", usageBarColor(convPct))} style={{ width: `${Math.min(100, convPct)}%` }} />
                       </div>
                     </div>
                   </TableCell>
