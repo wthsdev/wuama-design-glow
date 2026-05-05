@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon, Download, Search, Receipt, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -381,26 +381,26 @@ function SummaryCard({
   );
 }
 
-function DateField({
-  label,
-  date,
-  onChange,
-  className,
-}: {
+interface DateFieldProps {
   label: string;
   date?: Date;
   onChange: (d?: Date) => void;
   className?: string;
-}) {
+}
+
+const DateField = forwardRef<HTMLDivElement, DateFieldProps>(function DateField(
+  { label, date, onChange, className },
+  ref,
+) {
   return (
-    <Popover>
+    <div ref={ref} className={cn(className)}>
+      <Popover>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           className={cn(
-            "justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal",
             !date && "text-muted-foreground",
-            className,
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -416,6 +416,7 @@ function DateField({
           className={cn("p-3 pointer-events-auto")}
         />
       </PopoverContent>
-    </Popover>
+      </Popover>
+    </div>
   );
-}
+});
