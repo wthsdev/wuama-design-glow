@@ -19,8 +19,10 @@ export default function Workspaces() {
           <h1 className="font-heading text-3xl font-semibold">All Workspaces</h1>
           <p className="text-sm text-muted-foreground">Manage all your client workspaces</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" /> New Workspace
+        <Button asChild className="gap-2">
+          <Link to="/workspaces/new">
+            <Plus className="h-4 w-4" /> New Workspace
+          </Link>
         </Button>
       </div>
 
